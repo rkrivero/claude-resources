@@ -1,18 +1,21 @@
 {
   "name": "spatial-audit-engine",
-  "version": "0.1.0",
-  "description": "Motor de auditoría científica para análisis espacial urbano: EDA/ESDA, indicadores locales y máscaras de significancia, econometría hedónica espacial y cartografía reproducible. Genera código Python (PySAL/GeoPandas) con reglas de decisión incrustadas.",
+  "version": "0.2.0",
+  "description": "Motor de auditoría científica para análisis espacial cuantitativo: EDA/ESDA, autocorrelación (Moran, Geary, LISA, Gi*), estadística central y dispersión espacial (SDE, centro medio), econometría espacial (SAR/SEM/SDM/GWR/MGWR), clustering no supervisado (DBSCAN/HDBSCAN/K-means/SKATER), análisis espacio-temporal (cubos, 17 categorías de hot spots, Mann-Kendall), modelos de interacción espacial (gravedad, Poisson, NB, eigenfunction filtering) y cartografía reproducible. Genera código Python (PySAL/GeoPandas) con reglas de decisión incrustadas.",
   "author": {
-    "name": "Equipo cusco-estructura"
+    "name": "spatial-audit-engine"
   },
   "keywords": [
     "spatial-econometrics",
     "esda",
     "pysal",
     "geopandas",
-    "hedonic",
-    "urban-morphology",
-    "cartography"
+    "clustering",
+    "space-time",
+    "spatial-interaction",
+    "cartography",
+    "gwr",
+    "mgwr"
   ],
   "license": "MIT"
 }

@@ -36,7 +36,7 @@ def mapa_cobertura_dual(gdf_puntos):
     return fig
 ```
 
-Lee: si la KDE cubre el continuo urbano (centro ↔ San Jerónimo/San Sebastián),
+Lee: si la KDE cubre el continuo urbano (zona central ↔ zonas periféricas),
 hay variación espacial suficiente para calibrar un modelo local.
 
 ## Figura 2 — EDA de asimetría y submercados

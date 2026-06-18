@@ -70,8 +70,8 @@ bandwidth más amplio que capture la tendencia estructural del submercado.
 
 La forma del kernel (gaussian/bisquare/tricube) cambia <1% el resultado. Lo
 decisivo es el TIPO de ancho de banda:
-- **Fijo** (radio en metros): en ciudades con topografía como Cusco, 500 m
-  devoran 80 manzanas en el centro y no tocan ninguna en la periferia → sesgo
+- **Fijo** (radio en metros): en ciudades con topografía pronunciada o densidad irregular, 500 m
+  pueden abarcar decenas de manzanas en el centro y ninguna en la periferia → sesgo
   geográfico. EVITAR salvo densidad homogénea.
 - **Adaptativo** (k-vecinos, `fixed=False`): el radio se contrae en zonas densas
   y se expande en periferias dispersas; cada punto se calibra con la misma

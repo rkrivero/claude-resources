@@ -22,7 +22,7 @@ def jerarquia_tres_niveles(fig, ax_map):
     fig.text(0.06, 0.95, "Título del mapa", ha="left", va="top",
              fontsize=11, fontweight="medium")
     # fuente/metadatos abajo, peso de soporte, sin recuadro
-    fig.text(0.06, 0.045, "Fuente: ... · Elaboración propia · CRS EPSG:32719",
+    fig.text(0.06, 0.045, "Fuente: ... · Elaboración propia · CRS EPSG:[código]",
              ha="left", va="bottom", fontsize=7, color="0.35")
     return fig
 ```
@@ -30,3 +30,68 @@ def jerarquia_tres_niveles(fig, ax_map):
 Regla Brewer: ordenar con espacio vacío y alineación a los ejes invisibles del
 marco, nunca con cajas que añaden peso muerto. Escala y norte van en segundo
 plano (ver módulos siguientes para su estilo).
+
+## Alineación intencional vs. accidental (Brewer)
+
+Elementos CASI alineados (diferencia de 1–4 pt) parecen errores de descuido.
+Regla: o alinear PERFECTAMENTE o separar con una diferencia **≥ 8 pt** que
+el ojo lea como separación deliberada. No existe el "más o menos alineado".
+
+```python
+def verificar_alineacion(posiciones_y, tolerancia_pt=2, separacion_minima_pt=8):
+    """
+    Detecta alineamientos ambiguos en una lista de coordenadas Y (en puntos).
+    Devuelve pares que están demasiado cerca para ser casuales pero demasiado
+    lejos para alinearse con precisión.
+    """
+    alertas = []
+    for i, a in enumerate(posiciones_y):
+        for j, b in enumerate(posiciones_y):
+            if i >= j:
+                continue
+            delta = abs(a - b)
+            if tolerancia_pt < delta < separacion_minima_pt:
+                alertas.append((i, j, delta))
+    return alertas
+```
+
+## Proximidad escala-mapa (Brewer)
+
+La barra de escala debe estar **más cerca del mapa al que pertenece**
+que de cualquier otro elemento. En layouts con mapa principal + inset localizador,
+cada mapa necesita su propia escala, o la escala va sin ambigüedad junto al
+principal. Una escala huérfana en la esquina inferior sin relación de proximidad
+clara es un error de comunicación.
+
+```python
+def agregar_barra_escala(ax, longitud_km, x=0.08, y=0.04,
+                         linewidth=1.5, color="0.2"):
+    """
+    Barra de escala gráfica (resiste zoom/cambio de tamaño de figura).
+    Preferir SIEMPRE sobre RF (1:X) que se rompe al cambiar tamaño de export.
+    x, y en coordenadas de figura (0-1).
+    """
+    from matplotlib.lines import Line2D
+    from matplotlib.patches import FancyArrowPatch
+    fig = ax.get_figure()
+    # convertir longitud_km a unidades del mapa (asume CRS métrico)
+    xmin, xmax = ax.get_xlim()
+    ancho_datos = xmax - xmin
+    ancho_fig_inch = fig.get_figwidth() * (ax.get_position().width)
+    px_por_unidad = ancho_fig_inch * fig.dpi / ancho_datos
+    lon_unidades = longitud_km * 1000   # metros si CRS es UTM
+    lon_fig = lon_unidades / ancho_datos * ax.get_position().width
+    # trazar la barra
+    barra = plt.Line2D([x, x + lon_fig], [y, y],
+                       transform=fig.transFigure,
+                       color=color, linewidth=linewidth)
+    fig.add_artist(barra)
+    fig.text(x + lon_fig / 2, y - 0.015, f"{longitud_km} km",
+             ha="center", va="top", fontsize=6.5, color=color,
+             transform=fig.transFigure)
+    return barra
+```
+
+**Anti-patrón**: norte arrow elaborado / rosa de los vientos en mapa con cuadrícula UTM.
+Un símbolo simple (línea vertical + "N") es suficiente. Si el mapa está orientado
+al norte convencional y tiene ticks de latitud/longitud, el norte arrow es redundante.

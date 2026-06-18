@@ -6,13 +6,21 @@ Cowork sin tener que cargar el repositorio de la tesis.
 
 ## Plugins
 
-### `apa7-tesis` — calidad APA 7 y redacción académica
-Motor de calidad APA 7 para tesis de arquitectura. Cuatro skills:
+### `apa7-guidelines` — calidad APA 7 y redacción académica
+Motor de calidad APA 7 para investigación cuantitativa. Tres skills:
 
 - **apa-citation-auditor** — auditoría de citas en texto y lista de referencias (Caps. 8–10).
-- **jars-methodology-checker** — verificación de la metodología contra JARS-Quant (Cap. 3), calibrado para modelos hedónicos espaciales.
+- **jars-methodology-checker** — verificación de la metodología contra JARS-Quant (Cap. 3).
 - **scholarly-writing-coach** — coaching de prosa académica según los Caps. 4 y 6 del Manual APA 7.
-- **spanish-academic-style** — diagnóstico de vicios del español académico (sintaxis, economía léxica, gramática, lenguaje libre de sesgos) más allá de APA 7.
+
+### `academic-spanish-style` — composición procesual y corrección del castellano académico
+Motor de composición basado en Daniel Cassany + RAE/Fundéu. Cinco skills:
+
+- **diagnostico-textual** — diagnóstico en 4 niveles: adecuación, coherencia, cohesión, normativa (Cassany, 1993).
+- **legibilidad-estilo-llano** — análisis de legibilidad y transformación a estilo llano (Flesch, Henry, Richaudeau).
+- **estrategias-preescritura** — torbellino de ideas, estrella de preguntas, escritura libre, ideogramas y esquemas.
+- **revision-por-capas** — revisión experta en dos pases: contenido antes que forma (Flower, 1989 vía Cassany).
+- **corrector-prosa-castellana** — diagnóstico y corrección de vicios del castellano académico: gerundios, dequeísmo, nominalizaciones, pleonasmos, lenguaje libre de sesgos (RAE, Fundéu, Martínez de Sousa).
 
 ### `spatial-audit-engine` — auditoría de análisis espacial urbano
 Motor de auditoría científica para análisis espacial. Siete skills:
@@ -23,7 +31,7 @@ Motor de auditoría científica para análisis espacial. Siete skills:
 - **composicion-lienzo-cartografico** — composición y exportación de figuras de mapa.
 - **control-sesgos-validacion** — control de sesgos y validación.
 - **entorno-pipeline-reproducible** — entorno y pipeline reproducible.
-- **propuesta-viabilidad-espacial** — viabilidad del enfoque espacial para el plan de tesis.
+- **propuesta-viabilidad-espacial** — viabilidad del enfoque espacial para el plan de investigación.
 
 ## Uso
 
@@ -36,7 +44,7 @@ Añade el marketplace una sola vez:
 Luego instala los plugins que quieras:
 
 ```
-/plugin install apa7-tesis@claude-resources
+/plugin install apa7-guidelines@claude-resources
 /plugin install spatial-audit-engine@claude-resources
 ```
 

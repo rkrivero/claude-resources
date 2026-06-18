@@ -6,14 +6,19 @@ description: >
   visual", "balance del espacio vacío", "etiquetas que no se solapen",
   "adjustText", "halos en el texto", "path effects", "mapa base mudo",
   "contextily", "exportar para tesis / impresión / diapositiva", "300 DPI",
-  "CMYK vs RGB". Orchestrates visual hierarchy (Brewer), label collision control
-  (adjustText), figure-ground contrast via text halos, muted contextual
-  basemaps (contextily), and medium-specific export (print A4/Letter vs screen).
-  Consumes themed/masked layers from the analysis skills. Produces reproducible
-  matplotlib code.
+  "CMYK vs RGB", "selección de fuentes", "tipografía del mapa", "fuente serif /
+  sans-serif", "tracking de etiqueta", "tamaño mínimo de fuente", "posición de
+  etiqueta", "upper-right", "etiquetas de área", "color bivariado", "dos
+  variables en el mapa", "coeficiente + error estándar", "grilla de colores 3x3",
+  "escala gráfica", "flecha de norte redundante", "alineación intencional".
+  Orchestrates visual hierarchy (Brewer), label collision + placement by geometry
+  type (adjustText), figure-ground contrast via text halos, muted contextual
+  basemaps (contextily), font selection (Brewer Ch. 6-7), bivariate color schemes
+  (Brewer Ch. 9), and medium-specific export (print A4/Letter vs screen). Consumes
+  themed/masked layers from the analysis skills. Produces reproducible matplotlib code.
 metadata:
   version: "0.1.0"
-  author: "cusco-estructura"
+  author: "spatial-audit-engine"
 ---
 
 # Skill 3 — Composición de lienzo, jerarquía visual y control de colisiones
@@ -52,18 +57,22 @@ invisibles del marco. Jerarquía de lectura en tres niveles:
 
 Código: `references/modulo1-jerarquia-layout.md`.
 
-## Módulo 2 — Control de colisiones de etiquetas (adjustText)
+## Módulo 2 — Placement y control de colisiones de etiquetas (adjustText + Brewer)
 
 **Obtiene:** centroides de polígonos / puntos y las cadenas de texto (distritos,
 centralidades, barrios históricos).
 
-**Evalúa:** solapamiento entre bounding boxes tipográficos y geometrías. Detecta
-zonas de colapso de legibilidad (centro consolidado vs. periferia dispersa).
+**Evalúa:** (a) solapamiento entre bounding boxes tipográficos y geometrías;
+(b) posición preferida según el tipo de entidad: puntos usan 6 posiciones con
+upper-right como prioridad máxima; áreas usan centroide con tracking para cubrir
+el polígono; líneas se etiquetan paralelas a su dirección. Detecta zonas de
+colapso de legibilidad (centro consolidado vs. periferia dispersa).
 
-**Aplica:** repulsión iterativa con `adjustText`. Fuerza de atracción hacia la
-coordenada real del dato y repulsión respecto a textos adyacentes y bordes. En
-zonas saturadas, desplazar el texto y trazar leader lines ultradelgadas (0.2–0.5
-pt) que preservan el anclaje espacial sin solapamiento.
+**Aplica:** repulsión iterativa con `adjustText` despachada por tipo de geometría.
+Fuerza de atracción hacia la coordenada real del dato y repulsión respecto a textos
+adyacentes y bordes. En zonas saturadas, desplazar el texto y trazar leader lines
+ultradelgadas (0.2–0.5 pt). Combinar con `modulo13-fuentes-tipografia.md` para la
+selección de familia tipográfica según tipo de entidad.
 
 Código: `references/modulo2-adjusttext.md`.
 
@@ -118,6 +127,36 @@ proyector).
 
 Código: `references/modulo5-export.md`.
 
+## Módulo 13 — Tipografía cartográfica (Brewer, Cap. 6-7)
+
+**Obtiene:** el conjunto de etiquetas del mapa y el tipo de entidad de cada una
+(cultural/administrativa vs. hidrográfica/física).
+
+**Evalúa:** número de familias tipográficas en uso, tamaño de fuente respecto al
+medio, presencia de display fonts, incrustación en PDF, necesidad de tracking en
+áreas extensas.
+
+**Aplica:** máximo 2 familias (sans-serif para culturales, serif+cursiva para
+hidrográficos). Tamaño mínimo 6 pt (impresión) / 12 pt (pantalla). Tracking
+(`etiqueta_area_tracking`) para polígonos extensos. Verificar `pdf.fonttype=42`
+antes de exportar. PROHIBIR Impact, Giddyup u otras display fonts.
+
+Código: `references/modulo13-fuentes-tipografia.md`.
+
+## Módulo 14 — Color bivariado (Brewer, Cap. 9)
+
+**Obtiene:** dos variables continuas que deben representarse simultáneamente en la
+misma geometría (coeficiente GWR + error estándar, densidad + vacancia).
+
+**Evalúa:** combinación de tipos: sequential-sequential, diverging-diverging o
+qualitative-sequential. Determina el número de clases (máximo 3×3).
+
+**Aplica:** paleta en grilla 3×3, leyenda como cuadrado de colores con flechas
+direccionales por eje. Auditar con `simular_daltonismo` (→ `modulo6-color-accesible.md`).
+Acompañar con small multiples univariados para lectores no entrenados.
+
+Código: `references/modulo14-color-bivariado.md`.
+
 ## Reglas transversales de semiótica y acceso
 
 Auditorías que se aplican a CUALQUIER figura antes de exportar (recomendaciones
@@ -158,6 +197,14 @@ fuertes, no bloqueos):
   leyenda de la coropleta con un mini-histograma de la variable cruda, con las
   barras coloreadas según las clases del mapa, para mostrar cuántos datos caen en
   cada corte. Ver `references/modulo12-leyenda-histograma.md`.
+- **Selección de fuentes y tipografía (Brewer, Cap. 6-7).** Máximo 2 familias por
+  mapa (sans-serif para culturales, serif para hidrográficos/físicos). Tamaño mínimo
+  6 pt impresión / 12 pt pantalla. Tracking para etiquetas de área. PROHIBIR display
+  fonts. Incrustación PDF via `pdf.fonttype=42`. Ver `references/modulo13-fuentes-tipografia.md`.
+- **Color bivariado (Brewer, Cap. 9).** Para dos variables simultáneas (coeficiente +
+  error estándar, densidad + vacancia): grilla 3×3 sequential-sequential con leyenda
+  en forma de cuadrado de colores. No mezclar con univariados; auditar con
+  `simular_daltonismo`. Ver `references/modulo14-color-bivariado.md`.
 
 ## Entrega final
 

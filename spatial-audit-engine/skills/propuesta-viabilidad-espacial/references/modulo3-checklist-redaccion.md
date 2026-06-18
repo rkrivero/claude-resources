@@ -23,15 +23,15 @@
 
 ## Plantillas de redacción (rellenar)
 
-**Datos:** "Se georreferenciaron 380 transacciones de suelo en el Cusco
-Metropolitano (EPSG:32719). La Figura 1 muestra su cobertura sobre el continuo
-urbano; la densidad KDE confirma representación desde el centro histórico hasta
-los distritos de expansión (San Jerónimo, San Sebastián)."
+**Datos:** "Se georreferenciaron ___ unidades de observación en el área de estudio
+(CRS: [EPSG del área]). La Figura 1 muestra su cobertura sobre el continuo
+urbano; la densidad KDE confirma representación desde el centro hasta
+las zonas periféricas del área de estudio."
 
 **Justificación espacial:** "El Índice de Moran global (I = ___, p = ___, 999
-permutaciones) indica autocorrelación espacial positiva y significativa en el
-precio del suelo. Por tanto, un OLS clásico viola el supuesto de independencia de
-las observaciones, lo que motiva un enfoque de econometría espacial."
+permutaciones) indica autocorrelación espacial positiva y significativa en la
+variable dependiente. Por tanto, un OLS clásico viola el supuesto de independencia
+de las observaciones, lo que motiva un enfoque de econometría espacial."
 
 **Modelo:** "Se estimará primero un OLS global como línea base. Ante la
 heterogeneidad espacial esperada, se calibrará un MGWR con anchos de banda

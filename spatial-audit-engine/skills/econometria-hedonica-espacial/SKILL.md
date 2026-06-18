@@ -12,7 +12,7 @@ description: >
   cartografia-modelos-inferencia. Produces reproducible Python (spreg).
 metadata:
   version: "0.1.0"
-  author: "cusco-estructura"
+  author: "spatial-audit-engine"
 ---
 
 # Skill 4 — Econometría hedónica espacial

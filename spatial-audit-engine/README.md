@@ -73,4 +73,4 @@ Invoca cada skill por su tema. Ejemplos de disparadores:
 
 ## Customización
 
-Diseñado para el grupo de investigación cusco-estructura. Los ejemplos usan el contexto del Cusco metropolitano (UTM 19S, EPSG:32719), pero las reglas son agnósticas al caso de estudio: cambia el CRS objetivo y las variables y el flujo se mantiene.
+Los ejemplos usan proyecciones métricas locales (p. ej. UTM), pero las reglas son agnósticas al caso de estudio: ajusta el CRS objetivo y las variables y el flujo se mantiene.

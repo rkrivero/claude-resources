@@ -13,7 +13,7 @@ description: >
   skills; produces reproducible Python and a section outline.
 metadata:
   version: "0.1.0"
-  author: "cusco-estructura"
+  author: "spatial-audit-engine"
 ---
 
 # Skill 7 — Modo propuesta: viabilidad y justificación espacial
@@ -43,7 +43,7 @@ estática; DIAGNOSTICAR la adecuación para el N actual y dar recomendaciones,
 2. **¿Alcanza para calibrar localmente?** Lo decisivo es que cada ventana de
    ancho de banda adaptativo tenga suficientes vecinos: regla de oro local
    ≳ 5–10 obs por parámetro; con anchos adaptativos esto se garantiza fijando un
-   k mínimo. Global (OLS hedónico): ≳ 10–15 obs por predictor.
+   k mínimo. Global (OLS): ≳ 10–15 obs por predictor.
 3. **¿Cubre el territorio?** Más importante que N es la COBERTURA (Anselin,
    Fotheringham): NNI, densidad KDE, % del área a < d de un punto, y vacíos por
    zona. N adecuado mal distribuido sigue siendo inválido.
@@ -58,8 +58,8 @@ Diagnóstico, óptimos y obtención de datos: `references/modulo1-adecuacion-mue
 
 1. **Mapa de cobertura y densidad (viabilidad).** Mapa dual: izquierda, los 380
    puntos crudos con `alpha=0.6`; derecha, superficie KDE. Demuestra que la
-   muestra cubre el continuo urbano (centro histórico ↔ San Jerónimo/San
-   Sebastián) y no un solo barrio. Código nuevo en
+   muestra cubre el continuo urbano (zona central ↔ zonas periféricas)
+   y no un solo barrio. Código nuevo en
    `references/modulo2-figuras-clave.md`.
 2. **EDA de asimetría y submercados.** `jointplot` precio vs. determinante
    principal con histogramas marginales + `violinplot` por distrito. Revela la

@@ -25,7 +25,7 @@ from libpysal.weights import Queen
 from esda.moran import Moran_Local
 
 def run(path_in, path_out):
-    gdf = gpd.read_file(path_in).to_crs("EPSG:32719")
+    gdf = gpd.read_file(path_in).to_crs("EPSG:32719")  # ajustar al CRS métrico local
     w = Queen.from_dataframe(gdf, use_index=True); w.transform = "r"
     lm = Moran_Local(gdf["ln_precio"].values, w, permutations=999)
     gdf["lisa_q"] = lm.q

@@ -1,0 +1,18 @@
+{
+  "name": "apa7-guidelines",
+  "version": "0.9.0",
+  "description": "Motor de calidad APA 7 para investigación cuantitativa: auditoría de citas y referencias (APA 7 §8-9), verificación de estándares JARS-Quant y coaching de redacción académica en español (APA §4 y §6). Aplicable a tesis, artículos y reportes de investigación con componente estadístico o espacial. Para diagnóstico de vicios del castellano (RAE/Fundéu) y composición procesual (Cassany), usar el plugin complementario academic-spanish-style.",
+  "author": {
+    "name": "spatial-audit-engine"
+  },
+  "keywords": [
+    "apa7",
+    "citations",
+    "jars",
+    "academic-writing",
+    "quantitative-research",
+    "spatial-statistics",
+    "thesis"
+  ],
+  "license": "MIT"
+}

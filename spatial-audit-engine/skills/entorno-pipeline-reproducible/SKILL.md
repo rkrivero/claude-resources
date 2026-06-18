@@ -12,7 +12,7 @@ description: >
   GeoPackage handoffs, and provides contingency plans for the common failures.
 metadata:
   version: "0.1.0"
-  author: "cusco-estructura"
+  author: "spatial-audit-engine"
 ---
 
 # Skill 5 — Entorno y pipeline reproducible

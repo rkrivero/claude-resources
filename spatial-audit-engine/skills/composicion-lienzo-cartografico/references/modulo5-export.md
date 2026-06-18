@@ -38,3 +38,33 @@ pt, bordes 0.2–0.35 pt en gris, PDF/EPS o ≥300 DPI, verificar CMYK. Pantalla
 fuentes 12–14 pt, bordes ≥0.75 pt, paletas de alto contraste para proyector.
 Nota CMYK: matplotlib exporta en RGB; para impresión profesional convertir el
 PDF a CMYK con Ghostscript/Scribus y revisar prueba de color.
+
+## Escala gráfica vs. RF (Brewer, Cap. 4)
+
+PREFERIR SIEMPRE la escala gráfica (barra) sobre el Representative Fraction (1:X).
+
+- La barra **resiste** cualquier cambio de tamaño (zoom digital, fotocopia, impresión
+  en formato distinto al diseñado). El RF se rompe: si el mapa se imprime al 80%,
+  el RF "1:20 000" deja de ser cierto.
+- En tesis digitales que se visualizan en pantallas de distintos tamaños, el RF es
+  especialmente engañoso.
+
+```python
+# Ver agregar_barra_escala() en modulo1-jerarquia-layout.md
+# No añadir el RF al lado de la barra: es redundante y crea el error
+# de que "ambos son siempre correctos" cuando solo la barra lo es.
+```
+
+## Norte arrow (Brewer, Cap. 4)
+
+El norte arrow es REDUNDANTE si:
+- El mapa tiene una cuadrícula UTM o de lat/lon etiquetada.
+- El mapa está orientado al norte convencional (la gran mayoría de mapas).
+
+Solo es OBLIGATORIO cuando:
+- El mapa tiene una orientación no convencional (por ejemplo, rotado para ajustar
+  un corredor alargado en diagonal).
+- El mapa es de navegación donde la orientación es ambigua para el usuario.
+
+Símbolo correcto: línea vertical simple con "N" en la punta. Prohibir rosas de
+los vientos complejas — son decoración, no información.

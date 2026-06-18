@@ -1,13 +1,13 @@
 # Módulo 1 — Ingesta, perfilado geométrico y control de escala
 
-Código runnable. CRS objetivo Cusco: UTM 19S = EPSG:32719.
+Código runnable. CRS objetivo: ajustar al CRS métrico local del área de estudio (ejemplo: UTM 19S = EPSG:32719).
 
 ```python
 import geopandas as gpd
 import numpy as np
 from libpysal.weights import KNN
 
-TARGET_CRS = "EPSG:32719"  # UTM 19S — Cusco. Cambiar según caso de estudio.
+TARGET_CRS = "EPSG:32719"  # ejemplo UTM 19S. Cambiar al CRS métrico local según caso de estudio.
 
 def cargar_y_auditar(path):
     gdf = gpd.read_file(path)

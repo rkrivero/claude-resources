@@ -59,7 +59,7 @@ def cobertura_area(coords, area_estudio_geom, d=300):
 | Dimensión | Regla | Fuente conceptual |
 |-----------|-------|-------------------|
 | Computacional GWR/MGWR | cientos–pocos miles; >~8k usar ESF | Fotheringham; PySAL |
-| Global (OLS hedónico) | ≥10–15 obs por predictor | práctica econométrica |
+| Global (OLS) | ≥10–15 obs por predictor | práctica econométrica |
 | Local (ventana de bw) | ≥5–10 obs por parámetro por ventana | GWR adaptativo |
 | Ancho de banda adaptativo | fijar k mínimo ≈ 8×nº params (≥30) | Fotheringham |
 | Cobertura | NNI no extremo + sin vacíos por zona | Anselin |
@@ -68,12 +68,13 @@ Estos son criterios de orientación, no umbrales sagrados: documentar el usado.
 
 ## Dónde y cómo obtener / crecer la muestra
 
-- **Portales inmobiliarios** (scraping periódico): Urbania, Adondevivir,
-  Properati, marketplaces locales. Programar scraping incremental (ver skill
-  `entorno-pipeline-reproducible`) y deduplicar por geometría + precio + fecha.
-- **Registros públicos**: SUNARP (transferencias), municipalidades (catastro,
-  licencias), tasaciones, notarías. Más fiables que anuncios (precio real vs.
-  pedido); declarar la fuente y el tipo de precio.
+- **Fuentes primarias de datos** (descarga / scraping periódico): plataformas
+  de datos abiertos, portales institucionales, repositorios del sector relevante.
+  Programar scraping incremental (ver skill `entorno-pipeline-reproducible`) y
+  deduplicar por geometría + valor + fecha.
+- **Registros públicos**: organismos catastrales, registros de propiedad,
+  municipalidades, tasaciones institucionales. Más fiables que fuentes de
+  anuncios (valor real vs. pedido); declarar la fuente y el tipo de valor.
 - **Trabajo de campo dirigido**: levantar puntos solo donde el diagnóstico muestra
   vacíos.
 

@@ -13,7 +13,7 @@ description: >
   Produces reproducible Python (mgwr, spreg, scikit-learn, momepy).
 metadata:
   version: "0.1.0"
-  author: "cusco-estructura"
+  author: "spatial-audit-engine"
 ---
 
 # Skill 6 — Control de sesgos y validación
@@ -88,7 +88,7 @@ Código: `references/modulo4-endogeneidad.md`.
 
 ## Compuerta 5 — Correlación espuria por topografía / spatial drift (Haining, Griffith)
 
-En ciudades de geografía agresiva (Cusco), dos variables pueden parecer
+En ciudades de geografía agresiva (pendiente pronunciada, variación altitudinal marcada), dos variables pueden parecer
 conectadas solo porque comparten la misma tendencia geográfica de fondo (precio
 baja y la informalidad sube ladera arriba: ambas siguen la pendiente y la
 accesibilidad). Regla: ANTES de cantar victoria con un coeficiente, detrendizar —

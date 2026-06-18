@@ -12,7 +12,7 @@ description: >
   and the W matrix from eda-esda-diagnostico. Produces reproducible Python.
 metadata:
   version: "0.1.0"
-  author: "cusco-estructura"
+  author: "spatial-audit-engine"
 ---
 
 # Skill 2 — Cartografía de modelos y máscaras de inferencia
@@ -66,7 +66,7 @@ condicionales por variable en GWR/MGWR.
 **Evalúa:** la escala operativa de cada proceso socioespacial comparando los
 bandwidths. Bandwidth alto (cercano a n) ⇒ proceso global homogéneo. Bandwidth
 bajo ⇒ proceso muy localizado y sensible al entorno inmediato (gradiente
-topográfico, proximidad a centralidades del Cusco metropolitano).
+topográfico, proximidad a centralidades del área de estudio).
 
 **Aplica:** representación paramétrica multiescala. PROHIBIR suavizar
 uniformemente todas las variables. Respetar la rigidez del bandwidth de cada
@@ -139,9 +139,9 @@ Código: `references/modulo4-divergente.md`.
 ponderada del modelo local.
 
 **Evalúa:** la geografía del rendimiento del modelo. Identifica dónde la
-especificación (forma urbana, topografía, accesibilidad) explica bien y dónde el
-R² local cae drásticamente, señalando submercados con lógicas distintas u omisión
-de dinámicas locales (seguridad de tenencia, informalidad).
+especificación explica bien y dónde el R² local cae drásticamente, señalando
+zonas con dinámicas diferenciadas o posibles variables omitidas con estructura
+espacial propia.
 
 **Aplica:** rampas secuenciales monocromáticas / de luminosidad gradual (`YlGn`,
 `Purples`). RESTRINGIR clases amplias; usar intervalos precisos para delimitar las
@@ -149,6 +149,49 @@ fronteras de rendimiento. Este mapa de control es OBLIGATORIO junto a cualquier
 superficie de coeficientes.
 
 Código: `references/modulo5-r2-local.md`.
+
+## Módulo 7 — Efectos directos, indirectos y totales (SLM / SDM)
+
+Cuando el modelo elegido incluye término autorregresivo `ρWy` (SLM, SDM, SAC),
+el coeficiente `β` NO es el efecto marginal real: la retroalimentación espacial
+`(I − ρW)⁻¹` amplifica el impacto. Los efectos S(W) de LeSage-Pace descomponen
+ese impacto en:
+
+- **Directo**: efecto promedio de una unidad sobre sí misma (diagonal de S(W)).
+- **Indirecto (spillover)**: efecto promedio de una unidad sobre sus vecinos
+  (fuera de la diagonal de S(W)).
+- **Total**: suma de directo e indirecto.
+
+**Regla de cartografía.** Los efectos directos/indirectos son ESCALARES por
+variable (no superficies por unidad), por lo que se reportan en tabla, no en mapa.
+Incluir en el texto los tres efectos con SE e IC 95% para cada predictor relevante.
+Para el cálculo ver: skill `econometria-hedonica-espacial` →
+`references/modulo4-efectos.md`.
+
+**En SDM** los efectos del rezago espacial `WX` también se descomponen: reportar
+el efecto directo de `X` y el indirecto de `WX` por separado antes de mostrar
+las superficies de coeficientes locales.
+
+## Módulo 6 — Representación bivariada (coeficiente + incertidumbre)
+
+Cuando el análisis requiere mostrar simultáneamente la magnitud de un coeficiente
+GWR/MGWR **y** su error estándar local (o nivel de significancia), usar un esquema
+de color bivariado sequential-sequential en lugar de dos mapas separados.
+
+La combinación recomendada:
+- **Eje A (columnas)**: magnitud del coeficiente β_i (clase baja → alta en escala absoluta)
+- **Eje B (filas)**: error estándar o incertidumbre (clase baja → alta)
+
+Celda esquina inferior-derecha (alta magnitud + baja incertidumbre) = resultado
+robusto y significativo → color más saturado. Celda superior-derecha (alta magnitud
++ alta incertidumbre) = interpretar con cautela → color intermedio/desaturado.
+
+Código y paleta: skill `composicion-lienzo-cartografico` → `references/modulo14-color-bivariado.md`.
+
+**Nota de proyección (Brewer).** TODA superficie de coeficientes debe estar en
+proyección de **igual área** (usar el CRS métrico local del área de estudio). Representar
+coeficientes sobre Plate Carrée crea gradientes visuales falsos por distorsión
+de área en las zonas periféricas. Verificar con `gdf.crs` antes de graficar.
 
 ## Entrega final
 

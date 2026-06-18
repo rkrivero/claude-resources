@@ -1,0 +1,19 @@
+{
+  "name": "academic-spanish-style",
+  "version": "0.1.0",
+  "description": "Motor de composición procesal para redacción académica en español: diagnóstico textual en 4 niveles (normativa/cohesión/coherencia/adecuación), análisis de legibilidad y transformación a estilo llano, técnicas de preedición (torbellino de ideas, estrella de preguntas, escritura libre, ideogramas) y revisión experta multi-pase. Basado en Daniel Cassany (La cocina de la escritura, 1993; Reparar la escritura, 1993). Calibrado para tesis, artículos y reportes de investigación cuantitativa en español.",
+  "author": {
+    "name": "academic-spanish-style"
+  },
+  "keywords": [
+    "escritura-academica",
+    "composicion",
+    "legibilidad",
+    "revision-procesual",
+    "preedicion",
+    "cassany",
+    "estilo-llano",
+    "espanol"
+  ],
+  "license": "MIT"
+}

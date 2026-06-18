@@ -17,7 +17,7 @@ pixi add --pypi adjustText colorspacious   # solo lo que no está en conda-forge
 
 ```bash
 mamba env create -f examples/environment.yml
-mamba activate cusco-estructura
+mamba activate spatial-audit
 ```
 
 Ver `../examples/pixi.toml` y `../examples/environment.yml` listos para copiar a

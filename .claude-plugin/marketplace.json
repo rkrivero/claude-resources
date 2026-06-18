@@ -7,13 +7,13 @@
   },
   "plugins": [
     {
-      "name": "apa7-tesis",
-      "description": "Motor de calidad APA 7 para tesis: auditoría de citas, verificación JARS-Quant, coaching de redacción académica y estilo del español académico.",
+      "name": "apa7-guidelines",
+      "description": "Motor de calidad APA 7: auditoría de citas, verificación JARS-Quant, coaching de redacción académica y estilo del español académico.",
       "author": {
         "name": "rkrivero"
       },
       "category": "writing",
-      "source": "./apa7-tesis"
+      "source": "./apa7-guidelines"
     },
     {
       "name": "spatial-audit-engine",

@@ -4,15 +4,19 @@ description: >
   Use this skill when the user wants to audit, diagnose, profile, or explore a
   raw geospatial dataset BEFORE econometric modeling — triggers include "audita
   este shapefile/GeoJSON", "EDA espacial", "ESDA", "revisa el CRS", "qué matriz
-  de pesos uso", "calcula Moran global", "diagnostica la distribución de
-  precios", "antes de modelar revisa mis datos". Covers CRS and geometry audit,
-  visual-density diagnosis, non-spatial EDA, spatial weights (W) construction,
-  connectivity-graph validation, global Moran's I against CSR, and optimal class
-  selection (Fisher-Jenks / ADCM). Produces reproducible Python (GeoPandas,
-  libpysal, esda, mapclassify, seaborn).
+  de pesos uso", "calcula Moran global", "diagnostica la distribución", "antes
+  de modelar revisa mis datos", "centro medio", "centro mediano",
+  "elipse de desviación estándar", "SDE", "media direccional", "Geary's c",
+  "índice de Geary", "autocorrelación de Geary", "estadística central espacial",
+  "dispersión geográfica", "dónde se concentra el fenómeno". Covers CRS and
+  geometry audit, central-tendency and dispersion statistics (mean center,
+  SDE), visual-density diagnosis, non-spatial EDA, spatial weights (W)
+  construction, connectivity-graph validation, global Moran's I and Geary's c
+  against CSR, LISA, Gi*, and optimal class selection (Fisher-Jenks / ADCM).
+  Produces reproducible Python (GeoPandas, libpysal, esda, mapclassify, seaborn).
 metadata:
   version: "0.1.0"
-  author: "cusco-estructura"
+  author: "spatial-audit-engine"
 ---
 
 # Skill 1 — Diagnóstico estadístico y exploración espacial (EDA + ESDA)
@@ -46,15 +50,29 @@ global y cuadrantes del diagrama de Moran. Estos alimentan a los Skills 2-4.
 
 **Auditoría del tipo de entidad (object vs. field view).** Clasificar el
 dataset antes de tocarlo:
-- Puntos de scraping inmobiliario → entidades discretas (objetos), alta densidad,
+- Puntos de relevamiento de entidades discretas → objetos, alta densidad,
   riesgo de superposición (*cluttering*).
 - Manzanas / distritos → unidades de agregación espacial (campos).
 
-**Interrogación del CRS.** Exigir proyección métrica local. Para el Cusco,
-UTM 19S = EPSG:32719. Si el dataset llega en grados decimales (EPSG:4326), FRENAR
-y reproyectar antes de cualquier cálculo de distancia, área o vecindad — de lo
-contrario la curvatura terrestre distorsiona todo. Nunca calcular `W` ni
-distancias sobre coordenadas geográficas.
+**Interrogación del CRS.** Exigir proyección métrica local apropiada para el
+área de estudio (p. ej. UTM en la zona correspondiente). Si el dataset llega
+en grados decimales (EPSG:4326), FRENAR y reproyectar antes de cualquier
+cálculo de distancia, área o vecindad — de lo contrario la curvatura terrestre
+distorsiona todo. Nunca calcular `W` ni distancias sobre coordenadas geográficas.
+
+**Proyección según propósito cartográfico (Brewer).** La elección de CRS no es
+solo técnica; es semiótica:
+- **Choropletas / distribución de datos (precio/m², densidad, ratio)** →
+  proyección de **igual área** (equal-area). UTM 19S lo cumple a escala local.
+  Plate Carrée (EPSG:4326 sin reproyectar) VETADA: distorsiona áreas hacia los
+  polos y en geometrías elongadas crea gradientes visuales falsos donde solo hay
+  distorsión proyectiva.
+- **Referencia / accesibilidad / rutas** → conformal (UTM también sirve).
+- **Mapas de localización (inset)** → la proyección de la fuente de teselas
+  (generalmente Web Mercator EPSG:3857) es aceptable SOLO para el basemap de
+  fondo; los datos temáticos deben seguir en UTM.
+
+Verificar siempre con `gdf.crs` antes de cualquier render temático.
 
 **Diagnóstico de densidad visual.**
 - Puntos: calcular el índice de vecino más cercano (NNI). Si la densidad satura
@@ -75,14 +93,25 @@ transacciones, población), malla regular H3 (densidades puras comparables), o
 superficie picnofiláctica de Tobler (gradiente continuo que CONSERVA la masa por
 polígono). Tratar como recomendación fuerte, no como bloqueo absoluto.
 
-**Patrón de puntos multiescala (Ripley).** Con puntos crudos de scraping, NO fijar
+**Estadística central y dispersión espacial.** Antes de analizar la autocorrelación,
+caracterizar DÓNDE está la masa del fenómeno y en qué dirección se extiende.
+Calcular centro medio (o mediano si hay outliers extremos) y elipse de desviación
+estándar (SDE). La SDE revela el eje dominante del fenómeno (elongado vs. circular)
+y permite comparar la distribución entre grupos o períodos temporales. Disparar
+cuando el usuario pregunta "¿dónde se concentra?", "¿cómo evolucionó la
+distribución?" o "compara la dispersión entre grupos".
+
+Ver: `references/modulo1d-estadistica-central.md`.
+
+**Patrón de puntos multiescala (Ripley).** Con puntos crudos, NO fijar
 un radio KDE arbitrario. Correr la función K de Ripley / L de Besag contra la
 envolvente de CSR; la distancia de máxima desviación positiva es el radio óptimo
 de interacción → usarlo como ancho de banda KDE y como banda de distancia
 econométrica.
 
 Código y umbrales: `references/modulo1-ingesta-geometria.md`,
-`references/modulo1b-maup-alternativas.md`, `references/modulo1c-patron-puntos-ripley.md`.
+`references/modulo1b-maup-alternativas.md`, `references/modulo1c-patron-puntos-ripley.md`,
+`references/modulo1d-estadistica-central.md` (centro medio/mediano, SDE, media direccional).
 
 ## Módulo 2 — Perfilado estadístico no espacial (motor EDA)
 
@@ -95,10 +124,11 @@ crea donde no existe.
 
 Antes de mirar el mapa, interrogar la tabla de atributos.
 
-**Asimetría y colas largas.** Precio del suelo y densidades casi nunca son
-normales: sesgo a la derecha extremo. Ejecutar pruebas de asimetría (skewness,
-kurtosis, Shapiro/Jarque-Bera). Skewness alto ⇒ la varianza destruirá la
-eficiencia de un OLS global.
+**Asimetría y colas largas.** Variables geoespaciales intensivas (valores
+unitarios, densidades, tasas) casi nunca son normales: suelen presentar sesgo
+positivo extremo. Ejecutar pruebas de asimetría (skewness, kurtosis,
+Shapiro/Jarque-Bera). Skewness alto ⇒ la varianza destruirá la eficiencia de
+un OLS global.
 
 **Prescripción de transformación.** Determinar si la variable necesita
 transformación (log o Box-Cox) para estabilizar varianza, ANTES de mapear o
@@ -129,14 +159,15 @@ reglas:
   bandas de distancia crítica. Garantizar que ninguna observación quede aislada
   (peso cero).
 
-**Auditoría de barreras e islas.** Cusco metropolitano está condicionado por
-topografía agresiva, ríos y zonas arqueológicas protegidas. Inspeccionar `W` en
-busca de islas estadísticas (`w.islands`) y componentes desconectados.
+**Auditoría de barreras e islas.** El área de estudio puede estar condicionada
+por barreras físicas (ríos, elevaciones, infraestructura vial, áreas protegidas)
+que impiden la contigüidad real entre unidades. Inspeccionar `W` en busca de
+islas estadísticas (`w.islands`) y componentes desconectados.
 
 **Aplicación visual.** Graficar el grafo de conectividad: líneas uniendo
-centroides de vecinos sobre el mapa base. Si una arista cruza un cerro empinado o
-un río sin puente uniendo barrios realmente desconectados, ALERTAR que la matriz
-está mal calibrada y sugerir recortar la vecindad por accesibilidad real.
+centroides de vecinos sobre el mapa base. Si una arista cruza una barrera física
+real que impediría la interacción entre unidades, ALERTAR que la matriz está mal
+calibrada y sugerir recortar la vecindad por accesibilidad real.
 Estandarizar la matriz por filas (`transform='r'`) antes de usarla.
 
 Código y umbrales: `references/modulo3-pesos-espaciales.md`.
@@ -174,8 +205,16 @@ discutir burbujas especulativas o clusters de alta valoración absoluta frente a
 media de la ciudad, usar Gi* y mapear los Z-scores con cortes en ±1.96
 (hotspot/coldspot al 95%), neutro y desaturado en lo no significativo.
 
+**Geary's c — confirmación de robustez.** Cuando Moran's I indica clustering o
+dispersión, calcular también Geary's c (`esda.geary.Geary`). A diferencia de
+Moran, Geary compara pares de vecinos directamente (más sensible a diferencias
+locales). Si ambos coinciden, el patrón es robusto. Si divergen, investigar
+heterocedasticidad o anisotropía espacial. Rango: c ≈ 0 = autocorrelación
+positiva; c ≈ 1 = aleatoriedad; c ≈ 2 = dispersión.
+
 Código y umbrales: `references/modulo4-moran-global.md`,
-`references/modulo4b-lisa.md` y `references/modulo4c-getis-ord.md`.
+`references/modulo4b-lisa.md`, `references/modulo4c-getis-ord.md` y
+`references/modulo4d-geary-c.md`.
 
 ## Módulo 5 — Clasificación estadística (mapclassify + Brewer)
 

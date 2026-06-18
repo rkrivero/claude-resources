@@ -71,7 +71,7 @@ def mapa_interactivo(gdf_wgs84, popup_col):
 NO parchar con `pip`. Reinstalar limpio:
 
 ```bash
-pixi clean            # o: mamba env remove -n cusco-estructura
+pixi clean            # o: mamba env remove -n spatial-audit
 rm -f pixi.lock
 pixi install          # reconstruye desde pixi.toml (canal conda-forge único)
 # verificación:
