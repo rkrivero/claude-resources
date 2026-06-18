@@ -1,0 +1,42 @@
+[project]
+name = "cusco-estructura"
+version = "0.1.0"
+description = "Pipeline de análisis espacial urbano (EDA/ESDA, econometría, cartografía)"
+channels = ["conda-forge"]
+platforms = ["osx-64", "osx-arm64", "linux-64", "win-64"]
+
+[dependencies]
+python = ">=3.11"
+geopandas = "*"
+shapely = "*"
+pyproj = "*"
+gdal = "*"
+libpysal = "*"
+esda = "*"
+spreg = "*"
+mgwr = "*"
+pointpats = "*"
+mapclassify = "*"
+splot = "*"
+tobler = "*"
+momepy = "*"
+contextily = "*"
+geoplot = "*"
+h3-py = "*"
+seaborn = "*"
+matplotlib = "*"
+scipy = "*"
+scikit-learn = "*"
+statsmodels = "*"
+folium = "*"
+plotly = "*"
+marimo = "*"
+
+[pypi-dependencies]
+adjustText = "*"
+colorspacious = "*"
+
+[tasks]
+eda = "python src/eda_esda.py"
+models = "python src/spatial_models.py"
+maps = "python src/cartography_output.py"

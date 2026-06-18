@@ -1,0 +1,33 @@
+name: cusco-estructura
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.11
+  - geopandas
+  - shapely
+  - pyproj
+  - gdal
+  - libpysal
+  - esda
+  - spreg
+  - mgwr
+  - pointpats
+  - mapclassify
+  - splot
+  - tobler
+  - momepy
+  - contextily
+  - geoplot
+  - h3-py
+  - seaborn
+  - matplotlib
+  - scipy
+  - scikit-learn
+  - statsmodels
+  - folium
+  - plotly
+  - marimo
+  - pip
+  - pip:
+      - adjustText
+      - colorspacious
