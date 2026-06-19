@@ -25,6 +25,15 @@
       "source": "./academic-spanish-style"
     },
     {
+      "name": "humanizer",
+      "description": "Remove signs of AI-generated writing from text. Detects inflated symbolism, promotional language, em dash overuse, AI vocabulary, passive voice, filler phrases, and more.",
+      "author": {
+        "name": "rkrivero"
+      },
+      "category": "writing",
+      "source": "./humanizer"
+    },
+    {
       "name": "spatial-audit-engine",
       "description": "Motor de auditoría para análisis espacial urbano: EDA/ESDA, econometría hedónica espacial, clustering, análisis espacio-temporal, modelos de interacción y cartografía reproducible.",
       "author": {
