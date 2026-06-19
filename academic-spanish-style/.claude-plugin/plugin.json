@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "Composición y corrección para redacción académica en español: diagnóstico textual en 4 niveles (Cassany), legibilidad y estilo llano, preedición, revisión experta multi-pase y corrección normativa RAE/Fundéu. Calibrado para tesis, artículos y reportes de investigación.",
   "author": {
-    "name": "academic-spanish-style"
+    "name": "rkrivero"
   },
   "keywords": [
     "escritura-academica",
