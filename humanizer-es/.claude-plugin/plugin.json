@@ -1,0 +1,9 @@
+{
+  "name": "humanizer-es",
+  "version": "0.3.0",
+  "description": "Elimina rastros de texto generado por IA en castellano: inflación de significancia, léxico-IA, tripletes, gerundio analítico, sección formularia y 40 tells más. Calibrado para registro académico y no-académico en español.",
+  "author": {
+    "name": "rkrivero"
+  },
+  "license": "MIT"
+}
