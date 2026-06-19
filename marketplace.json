@@ -25,17 +25,8 @@
       "source": "./academic-spanish-style"
     },
     {
-      "name": "humanizer-es",
-      "description": "Elimina rastros de texto generado por IA en castellano: inflación de significancia, léxico-IA, tripletes, gerundio analítico, sección formularia y 40 tells más. Calibrado para registro académico y no-académico.",
-      "author": {
-        "name": "rkrivero"
-      },
-      "category": "writing",
-      "source": "./humanizer-es"
-    },
-    {
       "name": "humanizer",
-      "description": "Remove signs of AI-generated writing from text. Detects inflated symbolism, promotional language, em dash overuse, AI vocabulary, passive voice, filler phrases, and more.",
+      "description": "Bilingual AI-text humanizer (EN/ES). Detects and removes signs of AI-generated writing: inflated symbolism, promotional language, AI vocabulary, filler phrases, and 40+ language-specific tells.",
       "author": {
         "name": "rkrivero"
       },
